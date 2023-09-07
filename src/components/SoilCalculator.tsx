@@ -69,13 +69,13 @@ export default function SoilCalculator() {
   const [ewc, setEWC] = createSignal<number>();                  //-| In CuFt
   const humus = () => {
     const CuFt = (compost() ?? 0) + (ewc() ?? 0);
-    return Number(CuFt.toFixed(2));
+    return (CuFt === 0) ? undefined : Number(CuFt.toFixed(2));
   }  //-| In CuFt
   const [peat, setPeat] = createSignal<number>();                //-| In CuFt
   type LoamIngredients = 'compost'|'ewc'|'peat';
   const loam = () => {
-    const CuFt = (humus() ?? 0) + (peat() ?? 0);
-    return Number(CuFt.toFixed(2));
+    const CuFt = (humus() ?? 0) + (peat() ?? 0) + (aerationMix() ?? 0);
+    return (CuFt === 0) ? undefined : Number(CuFt.toFixed(2));
   }
   /** Aeration Mix Ingredients */
   const [pumice, setPumice] = createSignal<number>();            //-| In CuFt
@@ -85,7 +85,7 @@ export default function SoilCalculator() {
   type AerationMixIngredients = 'pumice'|'bioChar'|'lavaRock'|'riceHulls';
   const aerationMix = () => { //-| In CuFt
     const CuFt = (pumice() ?? 0) + (bioChar() ?? 0) + (lavaRock() ?? 0) + (riceHulls() ?? 0);
-    return Number(CuFt.toFixed(2));
+    return (CuFt === 0) ? undefined : Number(CuFt.toFixed(2));
   };
   /** Mineral Mix Ingredients */
   const [oysterShellFlour, setOysterShellFlour] = createSignal<number>(); //-| In Cups
@@ -96,7 +96,7 @@ export default function SoilCalculator() {
   type MineralMixIngredients = 'oyster'|'gypsum'|'glacial'|'basalt'|'bentonite';
   const mineralMix = () => {
     const CuFt = (oysterShellFlour() ?? 0) + (gypsum() ?? 0) + (glacialRockDust() ?? 0) + (basalt() ?? 0) + (calciumBentonite() ?? 0);
-    return Number(CuFt.toFixed(2));
+    return (CuFt === 0) ? undefined : Number(CuFt.toFixed(2));
   }         //-| In Cups
   /** Nutrient Mix Ingredients */
   const [neemMeal, setNeemMeal] = createSignal<number>();                 //-| 1/2 Cup
@@ -108,9 +108,10 @@ export default function SoilCalculator() {
   const [fishBoneMeal, setFishBoneMeal] = createSignal<number>();         //-| 1/4 Cup
   const [microbes, setMicrobes] = createSignal<number>();                //-| 1/16 Cup
   type NutrientMixIngredients = 'neem'|'kelp'|'crustacean'|'insect'|'kashi'|'karanja'|'fish'|'microbes';
-  const nutrientMix = () => (neemMeal() ?? 0)
-  + (kelpMeal() ?? 0) + (crustaceanMeal() ?? 0) + (insectFrass() ?? 0) + (kashiBlend() ?? 0)
-  + (karanjaMeal() ?? 0) + (fishBoneMeal() ?? 0) + (microbes() ?? 0);                          //-| In Cups
+  const nutrientMix = () => {
+    const CuFt = (neemMeal() ?? 0) + (kelpMeal() ?? 0) + (crustaceanMeal() ?? 0) + (insectFrass() ?? 0) + (kashiBlend() ?? 0) + (karanjaMeal() ?? 0) + (fishBoneMeal() ?? 0) + (microbes() ?? 0);
+    return (CuFt === 0) ? undefined : Number(CuFt.toFixed(2));
+  }                        //-| In Cups
   /** Final Soil Mix Ingredients */
   type SoilMixIngredients = LoamIngredients|AerationMixIngredients|MineralMixIngredients|NutrientMixIngredients;
   const [soil, setSoil] = createSignal<number>(); //-| In CuFt
@@ -214,19 +215,6 @@ export default function SoilCalculator() {
 
   return (
     <div class="bg-eggplant-200 dark:bg-night-900 dark:text-gray-200 rounded-md mx-2 flex flex-col items-center py-2 ">
-      <div class="flex flex-row">
-        <button class="flex flex-col items-center outline outline-1 outline-purple-200 dark:outline-night-700 mx-1 p-2 rounded">
-          <span class="leading-none mb-1">Do you already have any of the base soil ingredients?</span>
-          {/* <hr class="w-24 mt-2" />
-          <hr class="w-24 mt-1" />
-          <sub class="text-xs">Generally speaking, your most expensive ingredient is compost</sub>
-          <sub class="text-xs"> Because of this, if you already have several of the ingredients, I suggest you choose compost as your base ingredient</sub> */}
-        </button>
-
-        <button class="flex flex-col items-center outline outline-1 outline-purple-200 dark:outline-night-700 mx-1 p-2 rounded">
-          <span class="leading-none mb-1">Do you know to total amount of soil you need?</span>
-        </button>
-      </div>
       
       <div class="md:columns-2 sm:columns-1 w-full h-full dark:text-gray-200">
         <div class="flex flex-col justify-center items-center">
