@@ -1,10 +1,17 @@
 import { splitProps } from "solid-js";
 
-export default function FloatingInput(props: Record<string, any>) {
+interface FloatingInputProps {
+  label: string;
+  id: string;
+  type?: string;
+  placeholder?: string;
+  value?: string | number | string[];
+  oninput?: (event: InputEvent & { currentTarget: HTMLInputElement; target: HTMLInputElement; }) => void;
+}
+
+export default function FloatingInput(props: FloatingInputProps) {
   // R is required props, O is optional props
   const [r, o] = splitProps(props, ['label', 'id']);
-
-  console.info({ o })
 
   return (
     <div class="relative mb-3">
@@ -14,6 +21,7 @@ export default function FloatingInput(props: Record<string, any>) {
         id={r.id}
         placeholder={o.placeholder ?? r.label}
         value={o.value ?? ''}
+        oninput={o.oninput}
       ></input>
       <label
         for={r.id}
