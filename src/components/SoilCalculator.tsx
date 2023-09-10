@@ -1,5 +1,17 @@
-import { createSignal } from "solid-js";
-import FloatingInput from './FloatingInput';
+import { Accessor, createSignal } from "solid-js";
+import CuFtInput from './CuFtInput.jsx';
+import CupsInput from './CupsInput.jsx';
+
+const calculateMix = (...ingredients: Accessor<number|undefined>[]) => {
+  const total = ingredients.reduce((acc, curr) => acc + (curr() ?? 0), 0);
+
+  return (total === 0)
+    ? undefined // Don't show anything in the inputs if the value is 0
+    : Number(total.toFixed(2));
+}
+
+type CuFt = number;
+type Cups = number;
 
 /**
  * @example
@@ -12,10 +24,11 @@ import FloatingInput from './FloatingInput';
  * =========================
  * 
  * ## Humus Mix
- * ### (2 CuFt)
+ * ### (4 CuFt)
  *
- * - 1/3 Compost (Olly Mountain or Malibu Compost) | 33.33%
- * - 2/3 EWC (Rocky Mountain Earth Worm Castings)  | 66.67%
+ * - 1/6 Compost (Olly Mountain or Malibu Compost) | 16.66%
+ * - 2/6 EWC (Rocky Mountain Earth Worm Castings)  | 33.34%
+ * - 3/6 Peat (Sphagnum Moss)                      | 50%
  * 
  * =========================
  * 
@@ -32,9 +45,8 @@ import FloatingInput from './FloatingInput';
  * ## Base Soil
  * ### (8 CuFt)
  * 
- * - 2 CuFt Sphagnum moss (peat) | 25%
+ * - 4 CuFt Humus Mix            | 50%
  * - 4 CuFt Aeration Mix         | 50%
- * - 2 CuFt Humus Mix            | 25%
  * 
  * =========================
  * 
@@ -64,70 +76,101 @@ import FloatingInput from './FloatingInput';
  * =========================
  */
 export default function SoilCalculator() {
-  /** Base Soil Ingredients */
-  const [compost, setCompost] = createSignal<number>();          //-| In CuFt
-  const [ewc, setEWC] = createSignal<number>();                  //-| In CuFt
-  const humus = () => {
-    const CuFt = (compost() ?? 0) + (ewc() ?? 0);
-    return (CuFt === 0) ? undefined : Number(CuFt.toFixed(2));
-  }  //-| In CuFt
-  const [peat, setPeat] = createSignal<number>();                //-| In CuFt
-  type LoamIngredients = 'compost'|'ewc'|'peat';
-  const loam = () => {
-    const CuFt = (humus() ?? 0) + (peat() ?? 0) + (aerationMix() ?? 0);
-    return (CuFt === 0) ? undefined : Number(CuFt.toFixed(2));
-  }
-  /** Aeration Mix Ingredients */
-  const [pumice, setPumice] = createSignal<number>();            //-| In CuFt
-  const [bioChar, setBioChar] = createSignal<number>();          //-| In CuFt
-  const [lavaRock, setLavaRock] = createSignal<number>();        //-| In CuFt
-  const [riceHulls, setRiceHulls] = createSignal<number>();      //-| In CuFt
-  type AerationMixIngredients = 'pumice'|'bioChar'|'lavaRock'|'riceHulls';
-  const aerationMix = () => { //-| In CuFt
-    const CuFt = (pumice() ?? 0) + (bioChar() ?? 0) + (lavaRock() ?? 0) + (riceHulls() ?? 0);
-    return (CuFt === 0) ? undefined : Number(CuFt.toFixed(2));
-  };
-  /** Mineral Mix Ingredients */
-  const [oysterShellFlour, setOysterShellFlour] = createSignal<number>(); //-| In Cups
-  const [gypsum, setGypsum] = createSignal<number>();                     //-| In Cups
-  const [glacialRockDust, setGlacialRockDust] = createSignal<number>();   //-| In Cups
-  const [basalt, setBasalt] = createSignal<number>();                     //-| In Cups
-  const [calciumBentonite, setCalciumBentonite] = createSignal<number>(); //-| In Cups
-  type MineralMixIngredients = 'oyster'|'gypsum'|'glacial'|'basalt'|'bentonite';
-  const mineralMix = () => {
-    const CuFt = (oysterShellFlour() ?? 0) + (gypsum() ?? 0) + (glacialRockDust() ?? 0) + (basalt() ?? 0) + (calciumBentonite() ?? 0);
-    return (CuFt === 0) ? undefined : Number(CuFt.toFixed(2));
-  }         //-| In Cups
-  /** Nutrient Mix Ingredients */
-  const [neemMeal, setNeemMeal] = createSignal<number>();                 //-| 1/2 Cup
-  const [kelpMeal, setKelpMeal] = createSignal<number>();                 //-| 1/2 Cup
-  const [crustaceanMeal, setCrustaceanMeal] = createSignal<number>();     //-| 1/2 Cup
-  const [insectFrass, setInsectFrass] = createSignal<number>();           //-| 1/2 Cup
-  const [kashiBlend, setKashiBlend] = createSignal<number>();             //-| 1/3 Cup
-  const [karanjaMeal, setKaranjaMeal] = createSignal<number>();           //-| 1/3 Cup
-  const [fishBoneMeal, setFishBoneMeal] = createSignal<number>();         //-| 1/4 Cup
-  const [microbes, setMicrobes] = createSignal<number>();                //-| 1/16 Cup
-  type NutrientMixIngredients = 'neem'|'kelp'|'crustacean'|'insect'|'kashi'|'karanja'|'fish'|'microbes';
-  const nutrientMix = () => {
-    const CuFt = (neemMeal() ?? 0) + (kelpMeal() ?? 0) + (crustaceanMeal() ?? 0) + (insectFrass() ?? 0) + (kashiBlend() ?? 0) + (karanjaMeal() ?? 0) + (fishBoneMeal() ?? 0) + (microbes() ?? 0);
-    return (CuFt === 0) ? undefined : Number(CuFt.toFixed(2));
-  }                        //-| In Cups
-  /** Final Soil Mix Ingredients */
-  type SoilMixIngredients = LoamIngredients|AerationMixIngredients|MineralMixIngredients|NutrientMixIngredients;
-  const [soil, setSoil] = createSignal<number>(); //-| In CuFt
+  /** |======== Humus Ingredients ========| */
+  type HumusIngredients = 'compost'|'ewc'|'peat';
+
+  const [compost, setCompost] = createSignal<CuFt>();          //-| In CuFt
+  const [ewc, setEWC] = createSignal<CuFt>();                  //-| In CuFt
+  const [peat, setPeat] = createSignal<CuFt>();                //-| In CuFt
+
+  /**
+   * The base humus is (at least) 4 CuFt and composed of
+   * - 1/6 Compost (Olly Mountain or Malibu Compost) | 16.66%
+   * - 2/6 EWC (Rocky Mountain Earth Worm Castings)  | 33.34%
+   * - 3/6 Peat (Sphagnum Moss)                      | 50%
+   * */
+  const humusMix = () => calculateMix(compost, ewc, peat);
+
+  /** |======= Aeration Ingredients =======| */
+  type AerationIngredients = 'pumice'|'bioChar'|'lavaRock'|'riceHulls';
+
+  const [pumice, setPumice] = createSignal<CuFt>();            //-| In CuFt
+  const [bioChar, setBioChar] = createSignal<CuFt>();          //-| In CuFt
+  const [lavaRock, setLavaRock] = createSignal<CuFt>();        //-| In CuFt
+  const [riceHulls, setRiceHulls] = createSignal<CuFt>();      //-| In CuFt
+
+  /**
+   * The aeration mix is (at least) 4 CuFt and composed of
+   * - 1 part Pumice     | 1 CuFt | 25%
+   * - 1 part BioChar    | 1 CuFt | 25%
+   * - 1 part Lava Rock  | 1 CuFt | 25%
+   * - 1 part Rice Hulls | 1 CuFt | 25%
+   */
+  const aerationMix = () => calculateMix(pumice, bioChar, lavaRock, riceHulls);
+
+  /** |======= Mineral Ingredients =======| */
+  type MineralIngredients = 'oyster'|'gypsum'|'glacial'|'basalt'|'bentonite';
+
+  const [oysterShellFlour, setOysterShellFlour] = createSignal<Cups>(); //-| In Cups
+  const [gypsum, setGypsum] = createSignal<Cups>();                     //-| In Cups
+  const [glacialRockDust, setGlacialRockDust] = createSignal<Cups>();   //-| In Cups
+  const [basalt, setBasalt] = createSignal<Cups>();                     //-| In Cups
+  const [calciumBentonite, setCalciumBentonite] = createSignal<Cups>(); //-| In Cups
+
+  /**
+   * The mineral mix is (at least) 20 Cups and composed of
+   * - 2 part Oyster Shell Flour | 5 3/4 cups | 28.57%
+   * - 2 part Gypsum             | 5 3/4 cups | 28.57%
+   * - 1 parts Glacial Rock Dust | 2 3/4 cups | 14.28%
+   * - 1 part Basalt             | 2 3/4 cups | 14.28%
+   * - 1 part Calcium Bentonite  | 3 cups     | 14.28%
+   * */
+  const mineralMix = () => calculateMix(oysterShellFlour, gypsum, glacialRockDust, basalt, calciumBentonite);
+
+  /** |====== Amendment Ingredients ======| */
+  type AmendmentIngredients = 'neem'|'kelp'|'crustacean'|'insect'|'kashi'|'karanja'|'fish'|'microbes';
+
+  const [neemMeal, setNeemMeal] = createSignal<Cups>();                 //-| 1/2 Cup
+  const [kelpMeal, setKelpMeal] = createSignal<Cups>();                 //-| 1/2 Cup
+  const [crustaceanMeal, setCrustaceanMeal] = createSignal<Cups>();     //-| 1/2 Cup
+  const [insectFrass, setInsectFrass] = createSignal<Cups>();           //-| 1/2 Cup
+  const [kashiBlend, setKashiBlend] = createSignal<Cups>();             //-| 1/3 Cup
+  const [karanjaMeal, setKaranjaMeal] = createSignal<Cups>();           //-| 1/3 Cup
+  const [fishBoneMeal, setFishBoneMeal] = createSignal<Cups>();         //-| 1/4 Cup
+  const [microbes, setMicrobes] = createSignal<Cups>();                //-| 1/16 Cup
+
+  /**
+   * The nutrient mix is (at least) 40 Cups and composed of
+   * - 3 cup organic Neem meal
+   * - 3 cup organic Kelp meal
+   * - 3 cup organic Crustacean meal
+   * - 3 cup organic insect frass
+   * - 2 3/4 cup Gro-Kashi
+   * - 2 3/4 cup Karanja Meal
+   * - 2 cup of fish bone meal
+   * - 1/2 cup of Modern Microbes
+   * */
+  const amendmentMix = () => calculateMix(neemMeal, kelpMeal, crustaceanMeal, insectFrass, kashiBlend, karanjaMeal, fishBoneMeal, microbes);
+
+  /** |====== Complete Soil ======| */
+  type SoilMixIngredients = HumusIngredients|AerationIngredients|MineralIngredients|AmendmentIngredients;
+
+  const [soil, setSoil] = createSignal<CuFt>(); //-| In CuFt
 
   /** 1:1 Loam Mix to Aeration Mix */
   function calculateBaseSoilMix(sqFt: number) {
     /** 1:2 Compost to EWC */
-    const humus = sqFt / 4;
-    setCompost(Number((humus * (33.33 / 100)).toFixed(2)));
-    setEWC(Number((humus * (66.67 / 100)).toFixed(2)));
+    const totalCompostMix: CuFt = sqFt / 4;
+  
+    setCompost(Number((totalCompostMix * (33.33 / 100)).toFixed(2)));
+    setEWC(Number((totalCompostMix * (66.67 / 100)).toFixed(2)));
 
     /** 1:1 Sphagnum Moss to Humus Mix */
     setPeat(Number((sqFt / 4).toFixed(2)));
 
     /** 1:1:1:1 Pumice, BioChar, Lava Rock, Rice Hulls */
-    const aerationMix = sqFt / 2;
+    const aerationMix: CuFt = sqFt / 2;
+
     setPumice(Number((aerationMix / 4).toFixed(2)));
     setBioChar(Number((aerationMix / 4).toFixed(2)));
     setLavaRock(Number((aerationMix / 4).toFixed(2)));
@@ -182,7 +225,7 @@ export default function SoilCalculator() {
     const nutrientMixIngredients = ['neem', 'kelp', 'crustacean', 'insect', 'kashi', 'karanja', 'fish', 'microbes'] as const;
     const cupsIngredients = [...mineralMixIngredients, ...nutrientMixIngredients] as const;
 
-    const soilMath = (totalCuFt: number) => {
+    const soilMath = (totalCuFt: CuFt) => {
       const eightCuFtUnits = Number((totalCuFt / 8).toFixed(2));
 
       // We are calculating the total amount of soil needed
@@ -194,7 +237,7 @@ export default function SoilCalculator() {
 
     if (ingredient === 'all'){
       soilMath(value);
-    } else if (cuFtIngredients.includes(ingredient as LoamIngredients|AerationMixIngredients)) {
+    } else if (cuFtIngredients.includes(ingredient as HumusIngredients|AerationIngredients)) {
       if (ingredient === 'compost'){
         const baseSoilCuFt = ((value * 3) * 4);
         soilMath(baseSoilCuFt);
@@ -208,275 +251,145 @@ export default function SoilCalculator() {
         const baseSoilCuFt = (value * 4) * 4;
         soilMath(baseSoilCuFt);
       }
-    } else if (cupsIngredients.includes(ingredient as MineralMixIngredients|NutrientMixIngredients)) {
+    } else if (cupsIngredients.includes(ingredient as MineralIngredients|AmendmentIngredients)) {
 
     }
+  }
+
+  function recalculateSoil(ingredient: SoilMixIngredients|'all'){
+    return (e: InputEvent & { currentTarget: HTMLInputElement; target: HTMLInputElement; }) => calculateSoil(e.target.valueAsNumber, ingredient);
   }
 
   return (
     <div class="bg-eggplant-200 dark:bg-night-900 dark:text-gray-200 rounded-md mx-2 flex flex-col items-center py-2 ">
       
-      <div class="md:columns-2 sm:columns-1 w-full h-full dark:text-gray-200">
+      <div class="flex justify-evenly w-full h-full dark:text-gray-200">
         <div class="flex flex-col justify-center items-center">
-          <fieldset class="rounded dark:border-night-950 border-solid border p-2 pt-1 w-3/4">
-            <legend>Hummus Mix</legend>
+          <fieldset class="rounded dark:border-night-950 border-solid border p-2 pt-1 w-11/12">
+            <legend>Humus Mix</legend>
 
             <div class="flex flex-row justify-evenly items-center">
-              <FloatingInput
-                id="compost"
+              <CuFtInput
                 label="Compost"
-                type="number"
+                containerClassList="mx-2"
                 value={compost()}
-                oninput={e => calculateSoil(e.target.valueAsNumber, 'compost')}
+                oninput={recalculateSoil('compost')}
               />
 
-              <FloatingInput
-                id="ewc"
+              <CuFtInput
                 label="Earth Worm Castings"
-                type="number"
+                containerClassList="mx-2"
                 value={ewc()}
-                oninput={e => calculateSoil(e.target.valueAsNumber, 'ewc')}
+                oninput={recalculateSoil('ewc')}
+              />
+
+              <CuFtInput
+                label="Sphagnum Moss"
+                containerClassList="mx-2"
+                value={peat()}
+                oninput={recalculateSoil('peat')}
               />
             </div>
           </fieldset>
 
-          <fieldset class="rounded dark:border-night-950 border-solid border p-2 pt-1 w-3/4">
+          <fieldset class="rounded dark:border-night-950 border-solid border p-2 pt-1 w-11/12">
             <legend>Aeration Mix</legend>
 
             <div class="flex flex-row justify-evenly items-center">
-              <FloatingInput
-                id="pumice"
-                label="Pumice"
-                type="number"
-                value={pumice()}
-                oninput={e => calculateSoil(e.target.valueAsNumber, 'pumice')}
-              />
-
-              <FloatingInput
-                id="bioChar"
-                label="BioChar"
-                type="number"
-                value={bioChar()}
-                oninput={e => calculateSoil(e.target.valueAsNumber, 'bioChar')}
-              />
+              <CuFtInput label="Pumice" value={pumice()} oninput={recalculateSoil('pumice')} />
+              <CuFtInput label="BioChar" value={bioChar()} oninput={recalculateSoil('bioChar')} />
             </div>
 
             <div class="flex flex-row justify-evenly items-center">
-              <FloatingInput
-                id="lavaRock"
-                label="Lava Rock"
-                type="number"
-                value={lavaRock()}
-                oninput={e => calculateSoil(e.target.valueAsNumber, 'lavaRock')}
-              />
-
-              <FloatingInput
-                id="riceHulls"
-                label="Rice Hulls"
-                type="number"
-                value={riceHulls()}
-                oninput={e => calculateSoil(e.target.valueAsNumber, 'riceHulls')}
-              />
+              <CuFtInput label="Lava Rock" value={lavaRock()} oninput={recalculateSoil('lavaRock')} />
+              <CuFtInput label="Rice Hulls" value={riceHulls()} oninput={recalculateSoil('riceHulls')} />
             </div>
             
-          </fieldset>
-
-          <fieldset class="rounded dark:border-night-950 border-solid border p-2 pt-1 w-3/4">
-            <legend>Loam Mix</legend>
-
-            <div class="flex flex-row justify-evenly items-center">
-              <FloatingInput
-                id="peat"
-                label="Sphagnum Moss"
-                type="number"
-                value={peat()}
-                oninput={e => calculateSoil(e.target.valueAsNumber, 'peat')}
-              />
-
-              <FloatingInput
-                id="humusMix"
-                label="Humus Mix"
-                type="number"
-                value={humus()}
-                // oninput={e => calculateHumus(e.target.valueAsNumber, 'humus')}
-              />
-
-              <FloatingInput
-                id="aerationMix"
-                label="Aeration Mix"
-                type="number"
-                value={aerationMix()}
-                // oninput={e => calculateSoil(e.target.valueAsNumber, true)}
-              />
-           </div>
           </fieldset>
         </div>
 
         <div class="flex flex-col justify-between items-center">
-          <fieldset class="rounded dark:border-night-950 border-solid border p-2 pt-1 w-3/4">
+          <fieldset class="rounded dark:border-night-950 border-solid border p-2 pt-1 w-11/12">
             <legend>Mineral Mix</legend>
 
             <div class="flex flex-row justify-evenly items-center">
-              <FloatingInput
-                id="oysterShellFlour"
-                label="Oyster Shell Flour"
-                type="number"
-                value={oysterShellFlour()}
-                oninput={e => calculateSoil(e.target.valueAsNumber, 'oyster')}
-              />
+              <CupsInput label="Oyster Shell Flour" value={oysterShellFlour()} oninput={recalculateSoil('oyster')} />
 
-              <FloatingInput
-                id="gypsum"
+              <CupsInput
                 label="Gypsum"
-                type="number"
                 value={gypsum()}
-                oninput={e => calculateSoil(e.target.valueAsNumber, 'gypsum')}
+                oninput={recalculateSoil('gypsum')}
               />
             </div>
 
             <div class="flex flex-row justify-evenly items-center">
-              <FloatingInput
-                id="glacialRockDust"
+              <CupsInput
                 label="Glacial Rock Dust"
-                type="number"
                 value={glacialRockDust()}
-                oninput={e => calculateSoil(e.target.valueAsNumber, 'glacial')}
+                containerClassList="mx-2"
+                oninput={recalculateSoil('glacial')}
               />
 
-              <FloatingInput
-                id="basalt"
+              <CupsInput
                 label="Basalt"
-                type="number"
                 value={basalt()}
-                oninput={e => calculateSoil(e.target.valueAsNumber, 'basalt')}
+                containerClassList="mx-2"
+                oninput={recalculateSoil('basalt')}
               />
 
-              <FloatingInput
-                id="calciumBentonite"
+              <CupsInput
                 label="Calcium Bentonite"
-                type="number"
                 value={calciumBentonite()}
-                oninput={e => calculateSoil(e.target.valueAsNumber, 'bentonite')}
+                containerClassList="mx-2"
+                oninput={recalculateSoil('bentonite')}
               />
             </div>
           </fieldset>
 
-          <fieldset class="rounded dark:border-night-950 border-solid border p-2 pt-1 w-3/4">
+          <fieldset class="rounded dark:border-night-950 border-solid border p-2 pt-1 w-11/12">
             <legend>Amendments</legend>
 
             <div class="flex flex-row justify-evenly items-center">
-              <FloatingInput
-                id="neemMeal"
-                label="Neem Meal"
-                type="number"
-                value={neemMeal()}
-                oninput={e => calculateSoil(e.target.valueAsNumber, 'neem')}
-              />
-
-              <FloatingInput
-                id="kelpMeal"
-                label="Kelp Meal"
-                type="number"
-                value={kelpMeal()}
-                oninput={e => calculateSoil(e.target.valueAsNumber, 'kelp')}
-              />
+              <CupsInput label="Neem Meal" value={neemMeal()} oninput={recalculateSoil('neem')} />
+              <CupsInput label="Kelp Meal" value={kelpMeal()} oninput={recalculateSoil('kelp')} />
             </div>
 
             <div class="flex flex-row justify-evenly items-center">
-              <FloatingInput
-                id="crustaceanMeal"
-                label="Crustacean Meal"
-                type="number"
-                value={crustaceanMeal()}
-                oninput={e => calculateSoil(e.target.valueAsNumber, 'crustacean')}
-              />
-
-              <FloatingInput
-                id="insectFrass"
-                label="Insect Frass"
-                type="number"
-                value={insectFrass()}
-                oninput={e => calculateSoil(e.target.valueAsNumber, 'insect')}
-              />
+              <CupsInput label="Crustacean Meal" value={crustaceanMeal()} oninput={recalculateSoil('crustacean')} />
+              <CupsInput label="Insect Frass" value={insectFrass()} oninput={recalculateSoil('insect')} />
             </div>
 
             <div class="flex flex-row justify-evenly items-center">
-              <FloatingInput
-                id="kashiBlend"
-                label="Kashi Blend"
-                type="number"
-                value={kashiBlend()}
-                oninput={e => calculateSoil(e.target.valueAsNumber, 'kashi')}
-              />
-
-              <FloatingInput
-                id="karanjaMeal"
-                label="Karanja Meal"
-                type="number"
-                value={karanjaMeal()}
-                oninput={e => calculateSoil(e.target.valueAsNumber, 'karanja')}
-              />
+              <CupsInput label="Kashi Blend" value={kashiBlend()} oninput={recalculateSoil('kashi')} />
+              <CupsInput label="Karanja Meal" value={karanjaMeal()} oninput={recalculateSoil('karanja')} />
             </div>
 
             <div class="flex flex-row justify-evenly items-center">
-              <FloatingInput
-                id="fishBoneMeal"
-                label="Fish Bone Meal"
-                type="number"
-                value={fishBoneMeal()}
-                oninput={e => calculateSoil(e.target.valueAsNumber, 'fish')}
-              />
-
-              <FloatingInput
-                id="microbes"
-                label="Microbes"
-                type="number"
-                value={microbes()}
-                oninput={e => calculateSoil(e.target.valueAsNumber, 'microbes')}
-              />
-            </div>
-          </fieldset>
-        
-          <fieldset class="rounded dark:border-night-950 border-solid border p-2 pt-1 w-3/4">
-            <legend>Final Soil Mix</legend>
-
-            <div class="flex flex-row justify-evenly items-center">
-              <FloatingInput
-                id="mineralMix"
-                label="Mineral Mix"
-                type="number"
-                value={mineralMix()}
-                // oninput={e => calculateSoil(e.target.valueAsNumber, 'all')}
-              />
-
-              <FloatingInput
-                id="nutrientMix"
-                label="Nutrient Mix"
-                type="number"
-                value={nutrientMix()}
-                // oninput={e => calculateNutrientMix(e.target.valueAsNumber, 'all')}
-              />
-
-              <FloatingInput
-                id="loamMix"
-                label="Loam Mix"
-                type="number"
-                value={loam()}
-                // oninput={e => calculateLoamMix(e.target.valueAsNumber)}
-              />
-            </div>
-
-            <div class="flex flex-row justify-evenly items-center">
-              <FloatingInput
-                id="soil"
-                label="Soil"
-                type="number"
-                value={soil()}
-                oninput={e => calculateSoil(e.target.valueAsNumber, 'all')}
-              />
+              <CupsInput label="Fish Bone Meal" value={fishBoneMeal()} oninput={recalculateSoil('fish')} />
+              <CupsInput label="Microbes" value={microbes()} oninput={recalculateSoil('microbes')} />
             </div>
           </fieldset>
         </div>
+      </div>
+
+      <div class="flex flex-col w-full mt-2 items-center">
+        <fieldset class="rounded dark:border-night-950 border-solid border p-2 pt-1 w-1/2">
+          <legend>Final Soil Mix</legend>
+
+          <div class="flex flex-row justify-evenly items-center">
+            <CuFtInput label="Humus" value={humusMix()} disabled={true} />
+            <CuFtInput label="Aeration Mix" value={aerationMix()} disabled={true} />
+          </div>
+
+          <div class="flex flex-row justify-evenly items-center">
+            <CupsInput label="Mineral Mix" value={mineralMix()} disabled={true} />
+            <CupsInput label="Amendments" value={amendmentMix()} disabled={true} />
+          </div>
+
+          <div class="flex flex-row justify-evenly items-center">
+            <CuFtInput label="Final Soil Mix" value={soil()} oninput={recalculateSoil('all')} />
+          </div>
+        </fieldset>
       </div>
     </div>
   )
