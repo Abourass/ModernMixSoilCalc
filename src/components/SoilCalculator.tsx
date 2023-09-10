@@ -377,6 +377,10 @@ export default function SoilCalculator() {
           <legend>Final Soil Mix</legend>
 
           <div class="flex flex-row justify-evenly items-center">
+            <CuFtInput label="Final Soil Mix" value={soil()} oninput={recalculateSoil('all')} />
+          </div>
+
+          <div class="flex flex-row justify-evenly items-center">
             <CuFtInput label="Humus" value={humusMix()} disabled={true} />
             <CuFtInput label="Aeration Mix" value={aerationMix()} disabled={true} />
           </div>
@@ -384,10 +388,6 @@ export default function SoilCalculator() {
           <div class="flex flex-row justify-evenly items-center">
             <CupsInput label="Mineral Mix" value={mineralMix()} disabled={true} />
             <CupsInput label="Amendments" value={amendmentMix()} disabled={true} />
-          </div>
-
-          <div class="flex flex-row justify-evenly items-center">
-            <CuFtInput label="Final Soil Mix" value={soil()} oninput={recalculateSoil('all')} />
           </div>
         </fieldset>
       </div>
