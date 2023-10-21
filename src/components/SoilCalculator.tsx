@@ -2,7 +2,7 @@ import { Accessor, createSignal } from "solid-js";
 import CuFtInput from './CuFtInput.jsx';
 import CupsInput from './CupsInput.jsx';
 
-const calculateMix = (...ingredients: Accessor<number|undefined>[]) => {
+const calculateMix = (...ingredients: Accessor<number | undefined>[]) => {
   const total = ingredients.reduce((acc, curr) => acc + (curr() ?? 0), 0);
 
   return (total === 0)
@@ -77,11 +77,11 @@ type Cups = number;
  */
 export default function SoilCalculator() {
   /** |======== Humus Ingredients ========| */
-  type HumusIngredients = 'compost'|'ewc'|'peat';
+  type HumusIngredients = 'compost' | 'ewc' | 'peat';
 
-  const [compost, setCompost] = createSignal<CuFt>();          //-| In CuFt
-  const [ewc, setEWC] = createSignal<CuFt>();                  //-| In CuFt
-  const [peat, setPeat] = createSignal<CuFt>();                //-| In CuFt
+  const [compost, setCompost] = createSignal<CuFt>();          // -| In CuFt
+  const [ewc, setEWC] = createSignal<CuFt>();                  // -| In CuFt
+  const [peat, setPeat] = createSignal<CuFt>();                // -| In CuFt
 
   /**
    * The base humus is (at least) 4 CuFt and composed of
@@ -92,12 +92,12 @@ export default function SoilCalculator() {
   const humusMix = () => calculateMix(compost, ewc, peat);
 
   /** |======= Aeration Ingredients =======| */
-  type AerationIngredients = 'pumice'|'bioChar'|'lavaRock'|'riceHulls';
+  type AerationIngredients = 'pumice' | 'bioChar' | 'lavaRock' | 'riceHulls';
 
-  const [pumice, setPumice] = createSignal<CuFt>();            //-| In CuFt
-  const [bioChar, setBioChar] = createSignal<CuFt>();          //-| In CuFt
-  const [lavaRock, setLavaRock] = createSignal<CuFt>();        //-| In CuFt
-  const [riceHulls, setRiceHulls] = createSignal<CuFt>();      //-| In CuFt
+  const [pumice, setPumice] = createSignal<CuFt>();            // -| In CuFt
+  const [bioChar, setBioChar] = createSignal<CuFt>();          // -| In CuFt
+  const [lavaRock, setLavaRock] = createSignal<CuFt>();        // -| In CuFt
+  const [riceHulls, setRiceHulls] = createSignal<CuFt>();      // -| In CuFt
 
   /**
    * The aeration mix is (at least) 4 CuFt and composed of
@@ -109,13 +109,13 @@ export default function SoilCalculator() {
   const aerationMix = () => calculateMix(pumice, bioChar, lavaRock, riceHulls);
 
   /** |======= Mineral Ingredients =======| */
-  type MineralIngredients = 'oyster'|'gypsum'|'glacial'|'basalt'|'bentonite';
+  type MineralIngredients = 'oyster' | 'gypsum' | 'glacial' | 'basalt' | 'bentonite';
 
-  const [oysterShellFlour, setOysterShellFlour] = createSignal<Cups>(); //-| In Cups
-  const [gypsum, setGypsum] = createSignal<Cups>();                     //-| In Cups
-  const [glacialRockDust, setGlacialRockDust] = createSignal<Cups>();   //-| In Cups
-  const [basalt, setBasalt] = createSignal<Cups>();                     //-| In Cups
-  const [calciumBentonite, setCalciumBentonite] = createSignal<Cups>(); //-| In Cups
+  const [oysterShellFlour, setOysterShellFlour] = createSignal<Cups>(); // -| In Cups
+  const [gypsum, setGypsum] = createSignal<Cups>();                     // -| In Cups
+  const [glacialRockDust, setGlacialRockDust] = createSignal<Cups>();   // -| In Cups
+  const [basalt, setBasalt] = createSignal<Cups>();                     // -| In Cups
+  const [calciumBentonite, setCalciumBentonite] = createSignal<Cups>(); // -| In Cups
 
   /**
    * The mineral mix is (at least) 20 Cups and composed of
@@ -128,16 +128,16 @@ export default function SoilCalculator() {
   const mineralMix = () => calculateMix(oysterShellFlour, gypsum, glacialRockDust, basalt, calciumBentonite);
 
   /** |====== Amendment Ingredients ======| */
-  type AmendmentIngredients = 'neem'|'kelp'|'crustacean'|'insect'|'kashi'|'karanja'|'fish'|'microbes';
+  type AmendmentIngredients = 'neem' | 'kelp' | 'crustacean' | 'insect' | 'kashi' | 'karanja' | 'fish' | 'microbes';
 
-  const [neemMeal, setNeemMeal] = createSignal<Cups>();                 //-| 1/2 Cup
-  const [kelpMeal, setKelpMeal] = createSignal<Cups>();                 //-| 1/2 Cup
-  const [crustaceanMeal, setCrustaceanMeal] = createSignal<Cups>();     //-| 1/2 Cup
-  const [insectFrass, setInsectFrass] = createSignal<Cups>();           //-| 1/2 Cup
-  const [kashiBlend, setKashiBlend] = createSignal<Cups>();             //-| 1/3 Cup
-  const [karanjaMeal, setKaranjaMeal] = createSignal<Cups>();           //-| 1/3 Cup
-  const [fishBoneMeal, setFishBoneMeal] = createSignal<Cups>();         //-| 1/4 Cup
-  const [microbes, setMicrobes] = createSignal<Cups>();                //-| 1/16 Cup
+  const [neemMeal, setNeemMeal] = createSignal<Cups>();                 // -| 1/2 Cup
+  const [kelpMeal, setKelpMeal] = createSignal<Cups>();                 // -| 1/2 Cup
+  const [crustaceanMeal, setCrustaceanMeal] = createSignal<Cups>();     // -| 1/2 Cup
+  const [insectFrass, setInsectFrass] = createSignal<Cups>();           // -| 1/2 Cup
+  const [kashiBlend, setKashiBlend] = createSignal<Cups>();             // -| 1/3 Cup
+  const [karanjaMeal, setKaranjaMeal] = createSignal<Cups>();           // -| 1/3 Cup
+  const [fishBoneMeal, setFishBoneMeal] = createSignal<Cups>();         // -| 1/4 Cup
+  const [microbes, setMicrobes] = createSignal<Cups>();                // -| 1/16 Cup
 
   /**
    * The nutrient mix is (at least) 40 Cups and composed of
@@ -153,15 +153,15 @@ export default function SoilCalculator() {
   const amendmentMix = () => calculateMix(neemMeal, kelpMeal, crustaceanMeal, insectFrass, kashiBlend, karanjaMeal, fishBoneMeal, microbes);
 
   /** |====== Complete Soil ======| */
-  type SoilMixIngredients = HumusIngredients|AerationIngredients|MineralIngredients|AmendmentIngredients;
+  type SoilMixIngredients = HumusIngredients | AerationIngredients | MineralIngredients | AmendmentIngredients;
 
-  const [soil, setSoil] = createSignal<CuFt>(); //-| In CuFt
+  const [soil, setSoil] = createSignal<CuFt>(); // -| In CuFt
 
   /** 1:1 Loam Mix to Aeration Mix */
   function calculateBaseSoilMix(sqFt: number) {
     /** 1:2 Compost to EWC */
     const totalCompostMix: CuFt = sqFt / 4;
-  
+
     setCompost(Number((totalCompostMix * (33.33 / 100)).toFixed(2)));
     setEWC(Number((totalCompostMix * (66.67 / 100)).toFixed(2)));
 
@@ -169,36 +169,36 @@ export default function SoilCalculator() {
     setPeat(Number((sqFt / 4).toFixed(2)));
 
     /** 1:1:1:1 Pumice, BioChar, Lava Rock, Rice Hulls */
-    const aerationMix: CuFt = sqFt / 2;
+    const AerationMix: CuFt = sqFt / 2;
 
-    setPumice(Number((aerationMix / 4).toFixed(2)));
-    setBioChar(Number((aerationMix / 4).toFixed(2)));
-    setLavaRock(Number((aerationMix / 4).toFixed(2)));
-    setRiceHulls(Number((aerationMix / 4).toFixed(2)));
+    setPumice(Number((AerationMix / 4).toFixed(2)));
+    setBioChar(Number((AerationMix / 4).toFixed(2)));
+    setLavaRock(Number((AerationMix / 4).toFixed(2)));
+    setRiceHulls(Number((AerationMix / 4).toFixed(2)));
   }
 
   /** 2:2:1:1:1 Oyster Shell Flour (2) : Gypsum (2) : Glacial Rock Dust (1) : Basalt (1) : Calcium Bentonite (1) */
   function calculateMineralMix(cups: number) {
-    let oysterShellFlour = 0;
-    let gypsum = 0;
-    let glacialRockDust = 0;
-    let basalt = 0;
-    let calciumBentonite = 0;
+    let OysterShellFlour = 0;
+    let Gypsum = 0;
+    let GlacialRockDust = 0;
+    let Basalt = 0;
+    let CalciumBentonite = 0;
 
-    oysterShellFlour = Number((cups * (28.75 / 100)).toFixed(2));
-    gypsum = Number((cups * (28.75 / 100)).toFixed(2));
-    glacialRockDust = Number((cups * (14.28 / 100)).toFixed(2));
-    basalt = Number((cups * (14.28  / 100)).toFixed(2));
-    calciumBentonite = Number((cups * (14.28 / 100)).toFixed(2));
+    OysterShellFlour = Number((cups * (28.75 / 100)).toFixed(2));
+    Gypsum = Number((cups * (28.75 / 100)).toFixed(2));
+    GlacialRockDust = Number((cups * (14.28 / 100)).toFixed(2));
+    Basalt = Number((cups * (14.28 / 100)).toFixed(2));
+    CalciumBentonite = Number((cups * (14.28 / 100)).toFixed(2));
 
-    setOysterShellFlour(oysterShellFlour);
-    setGypsum(gypsum);
-    setGlacialRockDust(glacialRockDust);
-    setBasalt(basalt);
-    setCalciumBentonite(calciumBentonite);
+    setOysterShellFlour(OysterShellFlour);
+    setGypsum(Gypsum);
+    setGlacialRockDust(GlacialRockDust);
+    setBasalt(Basalt);
+    setCalciumBentonite(CalciumBentonite);
   }
 
-  /**  */
+  /** 3:3:3:3:2:2:2:1 Neem Meal (3) : Kelp Meal (3) : Crustacean Meal (3) : Insect Frass (3) : Kashi Blend (2.75) : Karanja Meal (2.75) : Fish Bone Meal (2) : Microbes (.5) */
   function calculateNutrientMix(cups: number) {
     const fortyCupUnits = Number((cups / 40).toFixed(2))
 
@@ -217,7 +217,7 @@ export default function SoilCalculator() {
     calculateMineralMix(Number((fortyCupUnits * 20).toFixed(2)))
   }
 
-  function calculateSoil(value: number, ingredient: SoilMixIngredients|'all') {
+  function calculateSoil(value: number, ingredient: SoilMixIngredients | 'all') {
     const loamIngredients = ['compost', 'ewc', 'peat'] as const;
     const aerationMixIngredients = ['pumice', 'bioChar', 'lavaRock', 'riceHulls'] as const;
     const cuFtIngredients = [...loamIngredients, ...aerationMixIngredients] as const;
@@ -235,34 +235,41 @@ export default function SoilCalculator() {
       setSoil(totalCuFt);
     }
 
-    if (ingredient === 'all'){
+    if (ingredient === 'all') {
       soilMath(value);
-    } else if (cuFtIngredients.includes(ingredient as HumusIngredients|AerationIngredients)) {
-      if (ingredient === 'compost'){
+    } else if (cuFtIngredients.includes(ingredient as HumusIngredients | AerationIngredients)) {
+      if (ingredient === 'compost') {
         const baseSoilCuFt = ((value * 3) * 4);
         soilMath(baseSoilCuFt);
-      } else if (ingredient === 'ewc'){
+      } else if (ingredient === 'ewc') {
         const baseSoilCuFt = (value * 1.5) * 4;
         soilMath(baseSoilCuFt);
-      } else if (ingredient === 'peat'){
+      } else if (ingredient === 'peat') {
         const baseSoilCuFt = (value * 2) * 4;
         soilMath(baseSoilCuFt);
-      } else if (ingredient === 'pumice' || ingredient === 'bioChar' || ingredient === 'lavaRock' || ingredient === 'riceHulls'){
+      } else if (ingredient === 'pumice' || ingredient === 'bioChar' || ingredient === 'lavaRock' || ingredient === 'riceHulls') {
         const baseSoilCuFt = (value * 4) * 4;
         soilMath(baseSoilCuFt);
       }
-    } else if (cupsIngredients.includes(ingredient as MineralIngredients|AmendmentIngredients)) {
-
+    } else if (cupsIngredients.includes(ingredient as MineralIngredients | AmendmentIngredients)) {
+      if (ingredient === 'oyster' || ingredient === 'gypsum' || ingredient === 'glacial' || ingredient === 'basalt' || ingredient === 'bentonite') {
+        // Use soilMath to calculate the total amount of soil needed
+        const nutrientMixCups = (value * 8) * 5;
+        soilMath(nutrientMixCups);
+      } else if (ingredient === 'neem' || ingredient === 'kelp' || ingredient === 'crustacean' || ingredient === 'insect' || ingredient === 'kashi' || ingredient === 'karanja' || ingredient === 'fish' || ingredient === 'microbes') {
+        const nutrientMixCups = (value * 8) * 5;
+        soilMath(nutrientMixCups);
+      }
     }
   }
 
-  function recalculateSoil(ingredient: SoilMixIngredients|'all'){
-    return (e: InputEvent & { currentTarget: HTMLInputElement; target: HTMLInputElement; }) => calculateSoil(e.target.valueAsNumber, ingredient);
+  function recalculateSoil(ingredient: SoilMixIngredients | 'all') {
+    return (e: InputEvent & { currentTarget: HTMLInputElement; target: HTMLInputElement; }) => { calculateSoil(e.target.valueAsNumber, ingredient); };
   }
 
   return (
     <div class="bg-eggplant-200 dark:bg-night-900 dark:text-gray-200 rounded-md mx-2 flex flex-col items-center py-2 ">
-      
+
       <div class="flex justify-evenly w-full h-full dark:text-gray-200">
         <div class="flex flex-col justify-center items-center">
           <fieldset class="rounded dark:border-night-950 border-solid border p-2 pt-1 w-11/12">
@@ -304,7 +311,7 @@ export default function SoilCalculator() {
               <CuFtInput label="Lava Rock" value={lavaRock()} oninput={recalculateSoil('lavaRock')} />
               <CuFtInput label="Rice Hulls" value={riceHulls()} oninput={recalculateSoil('riceHulls')} />
             </div>
-            
+
           </fieldset>
         </div>
 

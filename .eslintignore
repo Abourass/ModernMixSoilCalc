@@ -1,0 +1,33 @@
+# Config Files
+.eslintrc.cjs
+postcss.config.cjs
+tailwind.config.cjs
+
+# Build Folders
+dist
+.solid
+.output
+.vercel
+.netlify
+netlify
+
+# Environment
+.env
+.env*.local
+
+# dependencies
+/node_modules
+
+# IDEs and editors
+/.idea
+.project
+.classpath
+*.launch
+.settings/
+
+# Temp
+gitignore
+
+# System Files
+.DS_Store
+Thumbs.db
