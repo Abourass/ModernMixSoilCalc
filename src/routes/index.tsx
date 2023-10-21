@@ -1,5 +1,3 @@
-import { A } from "solid-start";
-import Counter from "~/components/Counter";
 import SoilCalculator from '~/components/SoilCalculator.jsx';
 
 export default function Home() {

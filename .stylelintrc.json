@@ -1,0 +1,9 @@
+{
+  "extends": ["stylelint-config-standard", "stylelint-use-nesting"],
+  "rules": {
+    "selector-not-notation": null,
+    "no-descending-specificity": null,
+    "selector-no-vendor-prefix": null,
+    "csstools/use-nesting": "always"
+  }
+}
