@@ -1,4 +1,5 @@
 import { splitProps } from 'solid-js';
+import { debounce } from '@solid-primitives/scheduled';
 import { FloatingInputProps } from './FloatingInput.jsx';
 import SuffixedInput from './SuffixedInput.jsx';
 import toCase from '~/modules/recase.js';
@@ -21,7 +22,7 @@ export default function CuFtInput(props: CuFtInputProps) {
       type="number"
       suffix="CuFt"
       value={o.value}
-      oninput={o.oninput}
+      oninput={o.oninput ? debounce(o.oninput as unknown as (e: unknown) => void, 350) : undefined}
       inputClassList={o.inputClassList}
       containerClassList={o.containerClassList}
       disabled={o.disabled}
