@@ -18,7 +18,7 @@ import "./root.css";
 export default function Root() {
   const location = useLocation();
   const active = (path: string) =>
-    path == location.pathname
+    path === location.pathname
       ? "border-night-50 dark:border-night-500"
       : "border-transparent hover:border-night-300";
 
@@ -43,6 +43,9 @@ export default function Root() {
               <ul class="container flex items-center p-3 text-gray-100 dark:text-gray-200">
                 <li class={`border-b-2 ${active("/")} mx-1.5 sm:mx-6`}>
                   <A href="/">Home</A>
+                </li>
+                <li class={`border-b-2 ${active("/calculator")} mx-1.5 sm:mx-6`}>
+                  <A href="/calculator">Calculator</A>
                 </li>
                 <li class={`border-b-2 ${active("/about")} mx-1.5 sm:mx-6`}>
                   <A href="/about">About</A>
