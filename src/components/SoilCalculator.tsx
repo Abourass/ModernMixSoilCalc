@@ -50,8 +50,8 @@ type Cups = number;
  * 
  * =========================
  * 
- * ## Mineral Mix
- * ### (20 Cups)
+ * ## Mineral Mix (3 Cups Per CuFt of Soil Mix)
+ * ### (20 Cups Worth)
  * 
  * - 2 part Oyster Shell Flour | 5 3/4 cups | 28.57%
  * - 2 part Gypsum             | 5 3/4 cups | 28.57%
@@ -60,20 +60,25 @@ type Cups = number;
  * - 1 part Calcium Bentonite  | 3 cups     | 14.28%
  * 
  * =========================
- * ## Amendments
- * ### (40 Cups)
+ * ## Amendment Mix (3 Cups Per CuFt of Soil Mix)
+ * ### (20 Cups Worth)
  * 
- * - 3 cup organic Neem meal
- * - 3 cup organic Kelp meal
- * - 3 cup organic Crustacean meal
- * - 3 cup organic insect frass
- * - 2 3/4 cup Gro-Kashi
- * - 2 3/4 cup Karanja Meal
- * - 2 cup of fish bone meal
- * - 1/2 cup of Modern Microbes
- * - 20 cups of Mineral Mix
+ * - 3 cup organic Neem meal       | 15%
+ * - 3 cup organic Kelp meal       | 15%
+ * - 3 cup organic Crustacean meal | 15%
+ * - 3 cup organic insect frass    | 15%
+ * - 2 3/4 cup Gro-Kashi        | 13.75%
+ * - 2 3/4 cup Karanja Meal     | 13.75%
+ * - 2 cup of fish bone meal       | 10%
+ * - 1/2 cup of Modern Microbes   | 2.5%
  * 
  * =========================
+ * ## Total Soil Mix (Minimums)
+ * - 1 CuFt Humus Mix
+ * - 1 CuFt Aeration Mix
+ * - 3 Cups Mineral Mix
+ * - 3 Cups Amendment Mix
+ * 
  */
 export default function SoilCalculator() {
   /** |======== Humus Ingredients ========| */
@@ -85,6 +90,7 @@ export default function SoilCalculator() {
 
   /**
    * The base humus is (at least) 4 CuFt and composed of
+   * @example
    * - 1/6 Compost (Olly Mountain or Malibu Compost) | 16.66%
    * - 2/6 EWC (Rocky Mountain Earth Worm Castings)  | 33.34%
    * - 3/6 Peat (Sphagnum Moss)                      | 50%
@@ -101,6 +107,7 @@ export default function SoilCalculator() {
 
   /**
    * The aeration mix is (at least) 4 CuFt and composed of
+   * @example
    * - 1 part Pumice     | 1 CuFt | 25%
    * - 1 part BioChar    | 1 CuFt | 25%
    * - 1 part Lava Rock  | 1 CuFt | 25%
@@ -119,6 +126,7 @@ export default function SoilCalculator() {
 
   /**
    * The mineral mix is (at least) 20 Cups and composed of
+   * @example
    * - 2 part Oyster Shell Flour | 5 3/4 cups | 28.57%
    * - 2 part Gypsum             | 5 3/4 cups | 28.57%
    * - 1 parts Glacial Rock Dust | 2 3/4 cups | 14.28%
@@ -130,25 +138,26 @@ export default function SoilCalculator() {
   /** |====== Amendment Ingredients ======| */
   type AmendmentIngredients = 'neem' | 'kelp' | 'crustacean' | 'insect' | 'kashi' | 'karanja' | 'fish' | 'microbes';
 
-  const [neemMeal, setNeemMeal] = createSignal<Cups>();                 // -| 1/2 Cup
-  const [kelpMeal, setKelpMeal] = createSignal<Cups>();                 // -| 1/2 Cup
-  const [crustaceanMeal, setCrustaceanMeal] = createSignal<Cups>();     // -| 1/2 Cup
-  const [insectFrass, setInsectFrass] = createSignal<Cups>();           // -| 1/2 Cup
-  const [kashiBlend, setKashiBlend] = createSignal<Cups>();             // -| 1/3 Cup
-  const [karanjaMeal, setKaranjaMeal] = createSignal<Cups>();           // -| 1/3 Cup
-  const [fishBoneMeal, setFishBoneMeal] = createSignal<Cups>();         // -| 1/4 Cup
-  const [microbes, setMicrobes] = createSignal<Cups>();                // -| 1/16 Cup
+  const [neemMeal, setNeemMeal] = createSignal<Cups>();                // -| In Cups
+  const [kelpMeal, setKelpMeal] = createSignal<Cups>();                // -| In Cups
+  const [crustaceanMeal, setCrustaceanMeal] = createSignal<Cups>();    // -| In Cups
+  const [insectFrass, setInsectFrass] = createSignal<Cups>();          // -| In Cups
+  const [kashiBlend, setKashiBlend] = createSignal<Cups>();            // -| In Cups
+  const [karanjaMeal, setKaranjaMeal] = createSignal<Cups>();          // -| In Cups
+  const [fishBoneMeal, setFishBoneMeal] = createSignal<Cups>();        // -| In Cups
+  const [microbes, setMicrobes] = createSignal<Cups>();                // -| In Cups
 
   /**
-   * The nutrient mix is (at least) 40 Cups and composed of
-   * - 3 cup organic Neem meal
-   * - 3 cup organic Kelp meal
-   * - 3 cup organic Crustacean meal
-   * - 3 cup organic insect frass
-   * - 2 3/4 cup Gro-Kashi
-   * - 2 3/4 cup Karanja Meal
-   * - 2 cup of fish bone meal
-   * - 1/2 cup of Modern Microbes
+   * The nutrient mix is (at least) 20 Cups and composed of
+   * @example
+   * - 3 cup organic Neem meal       | 15%
+   * - 3 cup organic Kelp meal       | 15%
+   * - 3 cup organic Crustacean meal | 15%
+   * - 3 cup organic insect frass    | 15%
+   * - 2 3/4 cup Gro-Kashi           | 13.75%
+   * - 2 3/4 cup Karanja Meal        | 13.75%
+   * - 2 cup of fish bone meal       | 10%
+   * - 1/2 cup of Modern Microbes    | 2.5%
    * */
   const amendmentMix = () => calculateMix(neemMeal, kelpMeal, crustaceanMeal, insectFrass, kashiBlend, karanjaMeal, fishBoneMeal, microbes);
 
@@ -226,11 +235,15 @@ export default function SoilCalculator() {
     const cupsIngredients = [...mineralMixIngredients, ...nutrientMixIngredients] as const;
 
     const soilMath = (totalCuFt: CuFt) => {
-      const eightCuFtUnits = Number((totalCuFt / 8).toFixed(2));
+      // For each CuFt of soil needed we need 3 cups of mineral mix
+      const mineralMixCups = (totalCuFt * 3);
+      // For each CuFt of soil needed we need 3 cups of nutrient mix
+      const nutrientMixCups = (totalCuFt * 3);
 
       // We are calculating the total amount of soil needed
       calculateBaseSoilMix(totalCuFt)
-      calculateNutrientMix(Number((eightCuFtUnits * 40).toFixed(2)))
+      calculateMineralMix(mineralMixCups)
+      calculateNutrientMix(nutrientMixCups)
 
       setSoil(totalCuFt);
     }
@@ -238,18 +251,15 @@ export default function SoilCalculator() {
     if (ingredient === 'all') {
       soilMath(value);
     } else if (cuFtIngredients.includes(ingredient as HumusIngredients | AerationIngredients)) {
-      if (ingredient === 'compost') {
-        const baseSoilCuFt = ((value * 3) * 4);
-        soilMath(baseSoilCuFt);
-      } else if (ingredient === 'ewc') {
-        const baseSoilCuFt = (value * 1.5) * 4;
-        soilMath(baseSoilCuFt);
-      } else if (ingredient === 'peat') {
-        const baseSoilCuFt = (value * 2) * 4;
-        soilMath(baseSoilCuFt);
+      if (ingredient === 'compost') { // Compost is 8% of the total soil mix
+        soilMath(value * (100 / 8));
+      } else if (ingredient === 'ewc') { // EWC is 16.67% of the total soil mix
+        soilMath(value * (100 / 16.67));
+      } else if (ingredient === 'peat') { // Peat is 25% of the total soil mix
+        soilMath(value * (100 / 25));
       } else if (ingredient === 'pumice' || ingredient === 'bioChar' || ingredient === 'lavaRock' || ingredient === 'riceHulls') {
-        const baseSoilCuFt = (value * 4) * 4;
-        soilMath(baseSoilCuFt);
+        // Each of these ingredients are 12.5% of the total soil mix
+        soilMath(value * (100 / 12.5));
       }
     } else if (cupsIngredients.includes(ingredient as MineralIngredients | AmendmentIngredients)) {
       if (ingredient === 'oyster' || ingredient === 'gypsum' || ingredient === 'glacial' || ingredient === 'basalt' || ingredient === 'bentonite') {
