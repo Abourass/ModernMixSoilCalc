@@ -14,6 +14,7 @@ import {
   Title,
 } from "solid-start";
 import "./root.css";
+import Toggle from './components/Toggle.jsx';
 
 export default function Root() {
   const location = useLocation();
@@ -29,17 +30,23 @@ export default function Root() {
     'Cultivate Culture',
   ].sort(() => Math.random() - 0.5)[0];
 
+  if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+    document.documentElement.classList.add('dark')
+  } else {
+    document.documentElement.classList.remove('dark')
+  }
+
   return (
     <Html lang="en">
       <Head>
-        <Title>TheModern.Farm - {tagline}</Title>
         <Meta charset="utf-8" />
         <Meta name="viewport" content="width=device-width, initial-scale=1" />
+        <Title>TheModern.Farm - {tagline}</Title>
       </Head>
       <Body class="bg-violet-50 dark:bg-night-950">
         <Suspense>
           <ErrorBoundary>
-            <nav class="bg-violet-800 dark:bg-night-950">
+            <nav class="bg-violet-800 dark:bg-night-950 flex justify-between">
               <ul class="container flex items-center p-3 text-gray-100 dark:text-gray-200">
                 <li class={`border-b-2 ${active("/")} mx-1.5 sm:mx-6`}>
                   <A href="/">Home</A>
@@ -51,6 +58,25 @@ export default function Root() {
                   <A href="/about">About</A>
                 </li>
               </ul>
+
+              <div class="flex items-center">
+                <Toggle
+                  label="Dark Mode"
+                  value="dark"
+                  oninput={(e) => {
+                    if (e.target.checked) {
+                      document.documentElement.classList.add('dark');
+                      localStorage.theme = 'dark';
+                    } else {
+                      document.documentElement.classList.remove('dark');
+                      localStorage.theme = 'light';
+                    }
+                  }}
+                  labelTextIntensity='100'
+                  labelDarkTextIntensity='200'
+                  checked={document.documentElement.classList.contains('dark')}
+                />
+              </div>
             </nav>
             <Routes>
               <FileRoutes />
