@@ -12,5 +12,6 @@
   "editor.codeActionsOnSave": {
     "source.fixAll": true
   },
-  "explorerExclude.backup": {}
+  "explorerExclude.backup": {},
+  "cSpell.words": ["posterama"]
 }
