@@ -1,11 +1,12 @@
 /** @type {import('tailwindcss').Config} */
 
 module.exports = {
+  darkMode: 'class',
   content: ["./src/**/*.{html,js,jsx,ts,tsx}"],
   theme: {
     extend: {
       colors: {
-        fuchsia : {
+        fuchsia: {
           '50': '#fdf6fd',
           '100': '#fbecfb',
           '200': '#f6d8f6',
@@ -69,7 +70,7 @@ module.exports = {
           '800': '#443656',
           '900': '#3c3149',
           '950': '#050406',
-      },      
+        },
       },
       boxShadow: {
         simpleInset: 'rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;'
