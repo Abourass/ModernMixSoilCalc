@@ -1,4 +1,4 @@
-import { splitProps } from 'solid-js';
+import { createSignal, splitProps } from 'solid-js';
 
 type FontIntensity = '100' | '200' | '300' | '400' | '500' | '600' | '700' | '800' | '900';
 
@@ -21,7 +21,8 @@ export default function Toggle(props: ToggleProps) {
   // R is required props, O is optional props
   const [r, o] = splitProps(props, ['label', 'value']);
 
-  if (!o.color) o.color = 'blue';
+  // eslint-disable-next-line solid/reactivity
+  const [color] = createSignal<NonNullable<ToggleProps['color']>>(o.color as ToggleProps['color'] ?? 'blue');
 
   return (
     <label class="relative inline-flex items-center mr-5 cursor-pointer">
@@ -40,8 +41,8 @@ export default function Toggle(props: ToggleProps) {
         rounded-full
         peer
         peer-focus:ring-4
-        peer-focus:ring-${o.color}-300
-        dark:peer-focus:ring-${o.color}-800
+        peer-focus:ring-${color()}-300
+        dark:peer-focus:ring-${color()}-800
         dark:bg-gray-700
         peer-checked:after:translate-x-full
         peer-checked:after:border-white after:content-['']
@@ -53,7 +54,7 @@ export default function Toggle(props: ToggleProps) {
         after:h-5 after:w-5
         after:transition-all
         dark:border-gray-600
-        peer-checked:bg-${o.color}-600
+        peer-checked:bg-${color()}-600
         ${o.classList ? o.classList : ""}`}
       />
       <span class={`

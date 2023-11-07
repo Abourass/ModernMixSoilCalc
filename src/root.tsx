@@ -15,6 +15,7 @@ import {
 } from "solid-start";
 import "./root.css";
 import Toggle from './components/Form/Toggle.jsx';
+import SiteHeader from './components/layout/SiteHeader.jsx';
 
 export default function Root() {
   const location = useLocation();
@@ -58,8 +59,8 @@ export default function Root() {
       <Body class="bg-violet-50 dark:bg-night-950">
         <Suspense>
           <ErrorBoundary>
-            <nav class="bg-violet-800 dark:bg-night-950 flex justify-between">
-              <ul class="container flex items-center p-3 text-gray-100 dark:text-gray-200">
+            <nav class="bg-violet-800 dark:bg-night-950 grid grid-cols-[1fr_auto_1fr] items-center">
+              <ul class="flex items-center px-3 text-gray-100 dark:text-gray-200">
                 <li class={`border-b-2 ${active("/")} mx-1.5 sm:mx-6`}>
                   <A href="/">Home</A>
                 </li>
@@ -71,7 +72,9 @@ export default function Root() {
                 </li>
               </ul>
 
-              <div class="flex items-center">
+              <SiteHeader />
+
+              <div class="w-min justify-self-end">
                 <Toggle
                   label={theme() === 'dark' ? 'Dark' : 'Light'}
                   value="dark"
