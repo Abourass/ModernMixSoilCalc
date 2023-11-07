@@ -1,5 +1,5 @@
 import { splitProps } from 'solid-js';
-import FloatingInput, { FloatingInputProps } from './FloatingInput.jsx';
+import FloatingInput, { FloatingInputProps } from './FloatingInput.js';
 
 interface SuffixedInputProps extends FloatingInputProps { suffix: string; inputClassList?: string; containerClassList?: string, disabled?: boolean }
 

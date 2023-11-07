@@ -1,6 +1,6 @@
 import { splitProps } from 'solid-js';
 import { debounce } from '@solid-primitives/scheduled';
-import { FloatingInputProps } from './FloatingInput.jsx';
+import { FloatingInputProps } from './FloatingInput.js';
 import SuffixedInput from './SuffixedInput.jsx';
 import toCase from '~/modules/recase.js';
 

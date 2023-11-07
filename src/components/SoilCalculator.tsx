@@ -1,6 +1,6 @@
 import { Accessor, createSignal } from "solid-js";
-import CuFtInput from './CuFtInput.jsx';
-import CupsInput from './CupsInput.jsx';
+import CuFtInput from './Form/CuFtInput.jsx';
+import CupsInput from './Form/CupsInput.jsx';
 
 const calculateMix = (...ingredients: Accessor<number | undefined>[]) => {
   const total = ingredients.reduce((acc, curr) => acc + (curr() ?? 0), 0);

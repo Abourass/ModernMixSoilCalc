@@ -14,7 +14,7 @@ import {
   Title,
 } from "solid-start";
 import "./root.css";
-import Toggle from './components/Toggle.jsx';
+import Toggle from './components/Form/Toggle.jsx';
 
 export default function Root() {
   const location = useLocation();

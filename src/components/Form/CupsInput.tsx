@@ -1,5 +1,5 @@
 import { splitProps } from 'solid-js';
-import { FloatingInputProps } from './FloatingInput.jsx';
+import { FloatingInputProps } from './FloatingInput.js';
 import SuffixedInput from './SuffixedInput.jsx';
 import toCase from '~/modules/recase.js';
 
