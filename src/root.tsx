@@ -1,5 +1,5 @@
 // @refresh reload
-import { Suspense } from "solid-js";
+import { Suspense, createEffect, createSignal } from "solid-js";
 import {
   useLocation,
   A,
@@ -30,11 +30,23 @@ export default function Root() {
     'Cultivate Culture',
   ].sort(() => Math.random() - 0.5)[0];
 
-  if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-    document.documentElement.classList.add('dark')
-  } else {
-    document.documentElement.classList.remove('dark')
+  /** If they've yet to set a dark mode preference let's default to their system preference */
+  if (localStorage.getItem('theme') === null) {
+    localStorage.setItem('theme', window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
   }
+
+  const [theme, setTheme] = createSignal(localStorage.theme);
+
+  /** Toggle Light and Dark Mode */
+  createEffect(() => {
+    if (theme() === 'dark') {
+      document.documentElement.classList.add('dark');
+      localStorage.setItem('theme', 'dark');
+    } else {
+      document.documentElement.classList.remove('dark')
+      localStorage.setItem('theme', 'light');
+    }
+  });
 
   return (
     <Html lang="en">
@@ -61,20 +73,18 @@ export default function Root() {
 
               <div class="flex items-center">
                 <Toggle
-                  label="Dark Mode"
+                  label={theme() === 'dark' ? 'Dark' : 'Light'}
                   value="dark"
                   oninput={(e) => {
                     if (e.target.checked) {
-                      document.documentElement.classList.add('dark');
-                      localStorage.theme = 'dark';
+                      setTheme('dark');
                     } else {
-                      document.documentElement.classList.remove('dark');
-                      localStorage.theme = 'light';
+                      setTheme('light');
                     }
                   }}
                   labelTextIntensity='100'
                   labelDarkTextIntensity='200'
-                  checked={document.documentElement.classList.contains('dark')}
+                  checked={theme() === 'dark'}
                 />
               </div>
             </nav>
