@@ -2,6 +2,20 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+  font-family: "Posterama 1901 W04 Thin";
+  src: url("posterama-1901-W04-thin.woff")format("woff"),
+    url("posterama-1901-W04-thin.woff2")format("woff2"),
+    url("posterama-1901-W04-thin.ttf")format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+.font-family-posterama-thin {
+  font-family: "Posterama 1901 W04 Thin";
+}
+
 :root {
   --bs-border-width: 1px;
   --bs-border-radius: 0.375rem;
