@@ -60,27 +60,30 @@ export default function Root() {
         <Suspense>
           <ErrorBoundary>
             <nav class="bg-violet-800 dark:bg-night-950 grid grid-cols-[1fr_auto_1fr] items-center">
-              <ul class="flex items-center px-3 text-gray-100 dark:text-gray-200">
+              <ul class="flex items-center md:px-3 md:self-auto sm:pl-1 sm:pr-2 sm:self-end text-gray-100 dark:text-gray-200">
                 <li class={`border-b-2 ${active("/")} mx-1.5 sm:mx-6`}>
                   <A href="/">Home</A>
                 </li>
                 <li class={`border-b-2 ${active("/calculator")} mx-1.5 sm:mx-6`}>
                   <A href="/calculator">Calculator</A>
                 </li>
-                <li class={`border-b-2 ${active("/about")} mx-1.5 sm:mx-6`}>
-                  <A href="/about">About</A>
-                </li>
               </ul>
 
-              <SiteHeader />
+              <SiteHeader class="sm:-mb-[1dvh] md:mb-0" />
 
-              <div class="w-min justify-self-end border-gray-400 dark:border-eggplant-800 border-2 rounded-2xl flex items-center p-2" style={{ "margin-right": "1dvw" }}>
+              <div class="w-min justify-self-end border-night-400 dark:border-eggplant-800 border-2 rounded-2xl flex items-center md:p-2 sm:my-1 sm:p-1 hover:border-x-night-300 dark:hover:border-x-eggplant-600" style={{ "margin-right": "1dvw" }}>
                 <Toggle
                   label={theme() === 'dark' ? 'Dark' : 'Light'}
+                  containerClassList='pr-2 sm:pr-0'
                   value="dark"
                   oninput={(e) => { setTheme((e.target.checked) ? 'dark' : 'light'); }}
-                  labelTextIntensity='100'
-                  labelDarkTextIntensity='200'
+                  labelTextIntensity='100' labelDarkTextIntensity='200'
+                  dotColor='cinder' dotIntensity='400'
+                  dotBorderColor='cinder' dotBorderIntensity='900'
+                  darkDotBorderColor='cinder' darkDotBorderIntensity='800'
+                  bgColor='slate' bgIntensity='400'
+                  darkBgColor='slate' darkBgIntensity='800'
+                  ringSize='0'
                   checked={theme() === 'dark'}
                 />
               </div>
