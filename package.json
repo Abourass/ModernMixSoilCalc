@@ -26,6 +26,7 @@
     "vite": "^4.4.9"
   },
   "dependencies": {
+    "@motionone/solid": "^10.16.4",
     "@solid-primitives/scheduled": "^1.4.1",
     "@solidjs/meta": "^0.29.1",
     "@solidjs/router": "^0.8.3",
