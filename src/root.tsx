@@ -74,17 +74,11 @@ export default function Root() {
 
               <SiteHeader />
 
-              <div class="w-min justify-self-end">
+              <div class="w-min justify-self-end border-gray-400 dark:border-eggplant-800 border-2 rounded-2xl flex items-center p-2" style={{ "margin-right": "1dvw" }}>
                 <Toggle
                   label={theme() === 'dark' ? 'Dark' : 'Light'}
                   value="dark"
-                  oninput={(e) => {
-                    if (e.target.checked) {
-                      setTheme('dark');
-                    } else {
-                      setTheme('light');
-                    }
-                  }}
+                  oninput={(e) => { setTheme((e.target.checked) ? 'dark' : 'light'); }}
                   labelTextIntensity='100'
                   labelDarkTextIntensity='200'
                   checked={theme() === 'dark'}
