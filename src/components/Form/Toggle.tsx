@@ -225,7 +225,7 @@ export default function Toggle(props: ToggleProps) {
   }
 
   return (
-    <Motion.label class={`relative inline-flex items-center cursor-pointer ${o.containerClassList ? o.containerClassList : ''}`}>
+    <Motion.label class={`ml-1 my-1 md:my-0 md:ml-0 relative inline-flex items-center cursor-pointer ${o.containerClassList ? o.containerClassList : ''}`}>
       <input
         type="checkbox"
         value={r.value}
@@ -236,18 +236,23 @@ export default function Toggle(props: ToggleProps) {
       />
       <div
         class={`
-        w-11 h-6 rounded-full
+        w-[33px] h-[18px]
+        md:w-11 md:h-6
+        rounded-full
         ${bgOptions[o.bgColor ?? 'gray'][mapIntensity(o.bgIntensity ?? '200')]}
         ${bgOptions[`dark${capitalize(o.darkBgColor ?? 'Gray')}`][mapIntensity(o.darkBgIntensity ?? '700')]}
         peer ${ringSizeOptions[o.ringSize ?? '4']} ${ringOptions[o.ringColor ?? 'blue'][mapIntensity(o.ringIntensity ?? '300')]}
         ${ringOptions[`dark${capitalize(o.darkRingColor ?? 'Blue')}`][mapIntensity(o.darkRingIntensity ?? '800')]}
         peer-checked:after:translate-x-full
         peer-checked:after:border-cinder-700 after:content-['']
-        after:absolute after:top-0.5 after:left-[2px]
+        after:absolute md:after:top-0.5 md:after:left-[2px]
         ${bgOptions[`after${capitalize(o.dotColor ?? 'White')}`][mapIntensity(o.dotIntensity ?? '800')]}
         ${borderOptions[o.dotBorderColor ?? 'gray'][mapIntensity(o.dotBorderIntensity ?? '300')]}
         ${borderOptions[`darkAfter${capitalize(o.darkDotBorderColor ?? 'Gray')}`][mapIntensity(o.darkDotBorderIntensity ?? '300')]}
-        after:border after:rounded-full after:h-5 after:w-5 after:transition-all
+        after:border after:rounded-full
+        after:h-[.9rem] after:w-[.9rem]
+        md:after:h-5 md:after:w-5
+        after:transition-all
         ${borderOptions[`dark${capitalize(o.darkBorderColor ?? 'Gray')}`][mapIntensity(o.darkBorderIntensities ?? '600')]}
         ${o.classList ? o.classList : ""}`}
       />
