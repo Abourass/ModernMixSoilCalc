@@ -278,7 +278,7 @@ export default function SoilCalculator() {
   }
 
   return (
-    <div class="bg-eggplant-200 dark:bg-night-900 dark:text-gray-200 rounded-md mx-2 flex flex-col items-center py-2 ">
+    <div class="bg-night-100 dark:bg-night-900 dark:text-gray-200 rounded-md mx-2 flex flex-col items-center py-2 ">
 
       <div class="flex justify-evenly w-full h-full dark:text-gray-200">
         <div class="flex flex-col justify-center items-center">
