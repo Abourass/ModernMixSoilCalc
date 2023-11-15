@@ -1,7 +1,7 @@
 {
   "name": "the_modern_farm",
   "scripts": {
-    "dev": "solid-start dev",
+    "dev": "yarn solid-start dev",
     "build": "solid-start build",
     "start": "solid-start start"
   },
@@ -37,6 +37,5 @@
   },
   "engines": {
     "node": "20"
-  },
-  "packageManager": "yarn@4.0.1"
+  }
 }
