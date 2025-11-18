@@ -182,13 +182,36 @@ The project enforces strict code quality standards:
 - **Type-safe** props and components
 
 ### Key Files
-- `src/components/SoilCalculator.tsx` (412 lines) - Core calculation engine
+- `src/components/SoilCalculator.tsx` - Calculator UI component
+- `src/services/soilCalculations.ts` - Pure calculation functions
+- `src/constants/soilRecipes.ts` - Recipe ratios and constants
+- `src/types/soil.ts` - TypeScript type definitions
 - `src/root.tsx` - Application layout and theming
 - `src/components/Form/Toggle.tsx` - Theme toggle component
 - `tailwind.config.cjs` - Custom color palette and theme
 
 ### Testing
-Currently, no testing framework is configured. See [Contributing Guide](docs/CONTRIBUTING.md) for plans to add testing.
+
+The project uses **Vitest** for testing with comprehensive coverage of calculation logic.
+
+```bash
+# Run tests
+npm test
+
+# Run tests in watch mode
+npm test -- --watch
+
+# Run tests with coverage
+npm run test:coverage
+```
+
+**Test Coverage**:
+- ✅ All calculation functions (35+ tests)
+- ✅ Input validation
+- ✅ Edge cases and integration tests
+- ✅ Round-trip calculation verification
+
+See [calculation tests](src/services/__tests__/soilCalculations.test.ts) for examples.
 
 ## Browser Support
 - Chrome/Edge (latest)

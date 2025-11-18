@@ -3,7 +3,10 @@
   "scripts": {
     "dev": "solid-start dev",
     "build": "solid-start build",
-    "start": "solid-start start"
+    "start": "solid-start start",
+    "test": "vitest",
+    "test:ui": "vitest --ui",
+    "test:coverage": "vitest --coverage"
   },
   "type": "module",
   "devDependencies": {
@@ -19,12 +22,14 @@
     "eslint-plugin-import": "^2.29.0",
     "eslint-plugin-jsx-a11y": "^6.8.0",
     "eslint-plugin-solid": "^0.13.0",
+    "jsdom": "^27.2.0",
     "postcss": "^8.4.28",
     "prettier": "3.0.3",
     "solid-start-node": "^0.3.9",
     "tailwindcss": "^3.3.5",
     "typescript": "^5.2.2",
-    "vite": "^4.4.9"
+    "vite": "^4.4.9",
+    "vitest": "^4.0.10"
   },
   "dependencies": {
     "@motionone/solid": "^10.16.4",
